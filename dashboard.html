@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>Dashboard - SINERGIA</title>
+  <meta charset="UTF-8">
+  <style>
+    body{
+      margin:0;
+      background:#05080f;
+      color:white;
+      font-family:Arial;
+    }
+    .header{
+      background:#00ffd5;
+      color:black;
+      padding:15px;
+      text-align:center;
+      font-weight:bold;
+      font-size:20px;
+    }
+    .container{
+      padding:20px;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:15px;
+    }
+    .card{
+      background:#0b1320;
+      padding:20px;
+      border-radius:12px;
+      box-shadow:0 0 15px #00ffd5;
+      text-align:center;
+      transition:0.3s;
+      cursor:pointer;
+    }
+    .card:hover{ transform:scale(1.05); }
+    .card a{
+      color:#00ffd5;
+      text-decoration:none;
+      font-size:18px;
+      display:block;
+    }
+    .stats{
+      margin:20px;
+      background:#0b1320;
+      padding:15px;
+      border-radius:10px;
+      box-shadow:0 0 10px #00ffd5;
+    }
+    .kpi-title{
+      margin: 10px 20px 0;
+      color:#00ffd5;
+      font-family:Arial;
+    }
+    .kpi-row{
+      display:flex;
+      gap:15px;
+      margin:20px;
+      flex-wrap:wrap;
+    }
+    .stat-box{
+      border:1px solid #00ffd5;
+      padding:15px;
+      min-width:180px;
+      color:#00ffd5;
+      font-family:Courier New;
+      background:rgba(0,255,213,0.05);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    ⚡ SINERGIA.SYSTEM — Dashboard Central
+  </div>
+
+  <div class="stats">
+    📊 Estado del sistema:<br>
+    ✔ Módulo IA activo<br>
+    ✔ Módulo Monetización activo<br>
+    ✔ Módulo Crecimiento activo<br>
+    ✔ Módulo Global activo
+  </div>
+
+  <div class="container">
+    <div class="card"><a href="ia.html">🤖 Módulo IA</a></div>
+    <div class="card"><a href="money.html">💰 Monetización</a></div>
+    <div class="card"><a href="ventas.html">💼 Ventas</a></div>
+    <div class="card"><a href="growth.html">📈 Crecimiento</a></div>
+    <div class="card"><a href="global.html">🌍 Global</a></div>
+    <div class="card"><a href="system.html">🧠 Sistema</a></div>
+  </div>
+
+  <h2 class="kpi-title">📊 Dashboard SINERGIA</h2>
+
+  <!-- KPIs (aquí SÍ existen los IDs) -->
+  <div class="kpi-row">
+    <div class="stat-box">👥 Usuarios: <span id="usuarios">0</span></div>
+    <div class="stat-box">📌 Leads: <span id="kpiLeads">0</span></div>
+    <div class="stat-box">✅ Cerrados: <span id="kpiCerrados">0</span></div>
+    <div class="stat-box">💰 Ingresos: <span id="kpiIngresos">S/ 0</span></div>
+    <div class="stat-box">⚙️ Módulos activos: <span id="modulos">0</span></div>
+  </div>
+
+  <script>
+    // Demo (fijos)
+    const usuariosDemo = 128;
+    const modulosDemo = 6;
+
+    function animar(id, valor){
+      let actual = 0;
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      const intervalo = setInterval(()=>{
+        actual++;
+        el.innerText = actual;
+        if(actual >= valor) clearInterval(intervalo);
+      }, 15);
+    }
+
+    animar("usuarios", usuariosDemo);
+    animar("modulos", modulosDemo);
+
+    // === KPIs REALES DESDE VENTAS (LocalStorage) ===
+    const KEY = "sinergia_leads_v1";
+
+    function parsePriceToNumber(txt) {
+      if (!txt) return 0;
+      const cleaned = String(txt).replace(",", ".").replace(/[^0-9.]/g, "");
+      const n = Number(cleaned);
+      return Number.isFinite(n) ? n : 0;
+    }
+
+    function updateDashboardKPIs() {
+      let leads = [];
+      try { leads = JSON.parse(localStorage.getItem(KEY)) || []; }
+      catch { leads = []; }
+
+      const totalLeads = leads.length;
+      const cerrados = leads.filter(x => x.estado === "Pagó" || x.estado === "Entregado").length;
+
+      const ingresosEstimados = leads
+        .filter(x => x.estado === "Pagó" || x.estado === "Entregado")
+        .reduce((acc, x) => acc + parsePriceToNumber(x.precio), 0);
+
+      const elLeads = document.getElementById("kpiLeads");
+      const elCerrados = document.getElementById("kpiCerrados");
+      const elIngresos = document.getElementById("kpiIngresos");
+
+      if (elLeads) elLeads.textContent = totalLeads;
+      if (elCerrados) elCerrados.textContent = cerrados;
+      if (elIngresos) elIngresos.textContent = "S/ " + Math.round(ingresosEstimados);
+    }
+
+    updateDashboardKPIs();
+    window.addEventListener("focus", updateDashboardKPIs);
+  </script>
+
+</body>
+</html>

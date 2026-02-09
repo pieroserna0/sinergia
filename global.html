@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Módulo Global - SINERGIA</title>
+<meta charset="UTF-8">
+<style>
+body{
+  background:#05080f;
+  color:white;
+  font-family:Arial;
+  text-align:center;
+  padding:40px;
+}
+.box{
+  max-width:700px;
+  margin:auto;
+  background:#0b1320;
+  padding:25px;
+  border-radius:12px;
+  box-shadow:0 0 20px #00ffd5;
+}
+button{
+  padding:12px 25px;
+  border:none;
+  border-radius:6px;
+  background:#00ffd5;
+  color:black;
+  font-weight:bold;
+  cursor:pointer;
+  margin:8px;
+}
+#resultado{
+  margin-top:15px;
+  color:#00ffd5;
+  font-size:17px;
+  text-align:left;
+}
+a{
+  color:#00ffd5;
+  text-decoration:none;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+  <h1>🌍 Módulo Global - SINERGIA</h1>
+  <p>Simulador de expansión internacional.</p>
+
+  <button onclick="expandir('USA')">🇺🇸 Estados Unidos</button>
+  <button onclick="expandir('EUROPA')">🇪🇺 Europa</button>
+  <button onclick="expandir('LATAM')">🌎 Latinoamérica</button>
+  <button onclick="expandir('ASIA')">🌏 Asia</button>
+
+  <div id="resultado"></div>
+
+  <br><br>
+  <a href="system.html">⬅ Volver al sistema</a>
+</div>
+
+<script>
+function expandir(region){
+  let data = {
+    "USA": "📊 Mercado grande, alta competencia, altos ingresos potenciales.",
+    "EUROPA": "📊 Mercados diversos, oportunidad en servicios digitales.",
+    "LATAM": "📊 Crecimiento rápido, bajo costo de entrada.",
+    "ASIA": "📊 Escala masiva, alta tecnología y demanda digital."
+  };
+
+  document.getElementById("resultado").innerHTML =
+    "🚀 Estrategia para " + region + ":<br><br>" + data[region];
+}
+</script>
+
+</body>
+</html>

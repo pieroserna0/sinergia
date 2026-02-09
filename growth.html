@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Módulo Crecimiento - SINERGIA</title>
+<meta charset="UTF-8">
+<style>
+body{
+  background:#05080f;
+  color:white;
+  font-family:Arial;
+  text-align:center;
+  padding:40px;
+}
+.box{
+  max-width:650px;
+  margin:auto;
+  background:#0b1320;
+  padding:25px;
+  border-radius:12px;
+  box-shadow:0 0 20px #00ffd5;
+}
+button{
+  padding:12px 25px;
+  border:none;
+  border-radius:6px;
+  background:#00ffd5;
+  color:black;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:10px;
+}
+#plan{
+  margin-top:15px;
+  color:#00ffd5;
+  font-size:17px;
+  text-align:left;
+}
+a{
+  color:#00ffd5;
+  text-decoration:none;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+  <h1>📈 Módulo Crecimiento - SINERGIA</h1>
+  <p>Genera una estrategia de expansión para tu sistema.</p>
+
+  <button onclick="generar()">Generar estrategia</button>
+
+  <div id="plan"></div>
+
+  <br><br>
+  <a href="system.html">⬅ Volver al sistema</a>
+</div>
+
+<script>
+function generar(){
+  let planes = [
+    "1️⃣ Crear contenido en redes sociales diariamente.<br>2️⃣ Automatizar respuestas con IA.<br>3️⃣ Escalar servicios digitales.",
+    "1️⃣ Lanzar un producto digital.<br>2️⃣ Crear embudo de ventas.<br>3️⃣ Expandir a mercados internacionales.",
+    "1️⃣ Ofrecer servicios premium.<br>2️⃣ Crear marca personal.<br>3️⃣ Monetizar con suscripciones.",
+    "1️⃣ Crear una plataforma web.<br>2️⃣ Integrar pagos online.<br>3️⃣ Escalar con marketing digital.",
+    "1️⃣ Usar IA para optimizar procesos.<br>2️⃣ Crear comunidad.<br>3️⃣ Internacionalizar el sistema."
+  ];
+
+  let random = planes[Math.floor(Math.random() * planes.length)];
+  document.getElementById("plan").innerHTML = "🚀 Estrategia recomendada:<br><br>" + random;
+}
+</script>
+
+</body>
+</html>

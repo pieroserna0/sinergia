@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SINERGIA.SYSTEM</title>
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:linear-gradient(120deg,#05080f,#0a1a2f,#000);
+  color:white;
+}
+.menu{
+  position:fixed;
+  top:0;
+  width:100%;
+  background:#05080f;
+  padding:12px;
+  text-align:right;
+  border-bottom:1px solid #00ffd5;
+  z-index:999;
+}
+.menu a{
+  color:#fff;
+  margin:0 15px;
+  text-decoration:none;
+  font-weight:bold;
+}
+.menu a.active{
+  color:#00ffd5;
+}
+.container{
+  padding:90px 20px;
+  text-align:center;
+}
+h1{
+  font-size:2.4rem;
+  color:#00ffd5;
+}
+.box{
+  margin-top:40px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+}
+.card{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(0,255,213,0.2);
+  padding:20px;
+  border-radius:12px;
+  transition:0.3s;
+  cursor:pointer;
+}
+.card:hover{
+  transform:translateY(-8px);
+  border-color:#00ffd5;
+}
+.locked{
+  opacity:0.35;
+}
+.locked span{
+  color:red;
+  font-size:0.9rem;
+}
+a{
+  text-decoration:none;
+  color:inherit;
+}
+</style>
+</head>
+<body>
+
+<div class="menu">
+  <a href="index.html">Inicio</a>
+  <a href="dark.html">Modo Dark</a>
+  <a href="system.html" class="active">Sistema</a>
+</div>
+
+<div class="container">
+  <h1>🤖 SINERGIA.SYSTEM</h1>
+  <p>Núcleo del sistema digital de inteligencia y monetización.</p>
+
+  <div class="box">
+
+    <a href="ia.html">
+      <div class="card premium">⚡ Módulo IA</div>
+    </a>
+
+    <a href="money.html">
+      <div class="card premium">💰 Módulo Monetización</div>
+    </a>
+
+    <a href="growth.html">
+      <div class="card premium">📈 Módulo Crecimiento</div>
+    </a>
+
+    <a href="global.html">
+      <div class="card premium">🌍 Módulo Global</div>
+    </a>
+
+    <a href="dashboard.html">
+      <div class="card premium">📊 Dashboard Central</div>
+    </a>
+
+  </div>
+</div>
+
+<script>
+let premium = localStorage.getItem("premium") === "true";
+
+if(!premium){
+  document.querySelectorAll(".premium").forEach(card => {
+    card.classList.add("locked");
+    card.innerHTML += "<br><span>🔒 Solo Premium</span>";
+  });
+}
+
+document.querySelectorAll(".premium").forEach(card => {
+  card.addEventListener("click", function(e){
+    if(!premium){
+      e.preventDefault();
+      alert("🔒 Este módulo es PREMIUM");
+    }
+  });
+});
+</script>
+
+</body>
+</html>

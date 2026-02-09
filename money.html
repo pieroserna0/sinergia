@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Módulo Monetización - SINERGIA</title>
+<meta charset="UTF-8">
+<style>
+body{
+  background:#05080f;
+  color:white;
+  font-family:Arial;
+  text-align:center;
+  padding:40px;
+}
+.box{
+  max-width:650px;
+  margin:auto;
+  background:#0b1320;
+  padding:25px;
+  border-radius:12px;
+  box-shadow:0 0 20px #00ffd5;
+}
+input{
+  width:70%;
+  padding:10px;
+  border-radius:6px;
+  border:none;
+  outline:none;
+  margin:5px;
+}
+button{
+  padding:10px 20px;
+  border:none;
+  border-radius:6px;
+  background:#00ffd5;
+  color:black;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:10px;
+}
+#resultado{
+  margin-top:15px;
+  color:#00ffd5;
+  font-size:18px;
+}
+a{
+  color:#00ffd5;
+  text-decoration:none;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+  <h1>💰 Módulo Monetización - SINERGIA</h1>
+
+  <p>💵 ¿Cuánto ganas por cliente? (USD)</p>
+  <input id="precio" type="number" placeholder="Ej: 50">
+
+  <p>👥 ¿Cuántos clientes al mes?</p>
+  <input id="clientes" type="number" placeholder="Ej: 20">
+
+  <br>
+  <button onclick="calcular()">Calcular ingresos</button>
+
+  <div id="resultado"></div>
+
+  <hr style="margin:20px;border:1px solid #00ffd5;">
+
+  <h3>🚀 Generador de ideas de negocio</h3>
+  <button onclick="idea()">Generar idea</button>
+  <div id="idea"></div>
+
+  <br><br>
+  <a href="system.html">⬅ Volver al sistema</a>
+</div>
+
+<script>
+function calcular(){
+  let p = document.getElementById("precio").value;
+  let c = document.getElementById("clientes").value;
+  let total = p * c;
+
+  document.getElementById("resultado").innerHTML =
+    "📈 Ingreso mensual estimado: <b>$" + total + "</b>";
+}
+
+function idea(){
+  let ideas = [
+    "Crear páginas web para negocios locales",
+    "Vender ebooks con IA",
+    "Servicios de automatización con IA",
+    "Marketing digital para empresas",
+    "Cursos online premium",
+    "Chatbots para negocios",
+    "Tiendas digitales sin stock"
+  ];
+
+  let random = ideas[Math.floor(Math.random() * ideas.length)];
+  document.getElementById("idea").innerHTML = "💡 Idea: " + random;
+}
+</script>
+
+</body>
+</html>

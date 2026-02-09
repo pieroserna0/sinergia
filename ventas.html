@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SINERGIA.SYSTEM — Ventas</title>
+  <style>
+    :root{
+      --bg:#050b12; --panel:#071525; --panel2:#06111e;
+      --line: rgba(0, 255, 200, .25);
+      --glow: rgba(0, 255, 200, .35);
+      --text:#d6fff4; --muted:#8fd8c8;
+      --accent:#00ffd0; --danger:#ff4d6d; --warn:#ffd166;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: radial-gradient(1200px 700px at 50% -10%, rgba(0,255,208,.12), transparent 60%),
+                  radial-gradient(900px 600px at 10% 10%, rgba(0,150,255,.08), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+    }
+    header{
+      position:sticky; top:0; z-index:5;
+      background: linear-gradient(90deg, rgba(0,255,208,.15), rgba(0,0,0,0));
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--line);
+    }
+    .topbar{
+      max-width:1100px; margin:0 auto; padding:14px 18px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:800; letter-spacing:.4px;
+    }
+    .chip{
+      border:1px solid var(--line);
+      box-shadow: 0 0 20px rgba(0,255,208,.08);
+      background: rgba(0,255,208,.06);
+      padding:6px 10px; border-radius:999px;
+      color:var(--muted); font-size:12px;
+    }
+    .btn{
+      cursor:pointer;
+      border:1px solid var(--line);
+      background: rgba(0,255,208,.06);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      transition:.15s transform, .15s box-shadow, .15s background;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      font-weight:650;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 0 24px rgba(0,255,208,.12);
+      background: rgba(0,255,208,.10);
+    }
+    .btn.primary{
+      border-color: rgba(0,255,208,.45);
+      background: rgba(0,255,208,.14);
+    }
+    main{max-width:1100px; margin:0 auto; padding:20px 18px 50px;}
+    .grid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:16px;
+    }
+    @media (max-width: 980px){ .grid{grid-template-columns: 1fr;} }
+
+    .card{
+      background: linear-gradient(180deg, rgba(0,255,208,.06), rgba(0,0,0,0));
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
+      box-shadow: 0 0 26px rgba(0,255,208,.08);
+    }
+    .card h2{margin:0 0 10px; font-size:18px}
+    .row{display:grid; grid-template-columns: 1fr 1fr; gap:10px;}
+    @media (max-width: 520px){ .row{grid-template-columns: 1fr;} }
+
+    label{display:block; font-size:12px; color:var(--muted); margin:10px 0 6px;}
+    input, select, textarea{
+      width:100%;
+      background: rgba(3, 10, 18, .7);
+      border:1px solid rgba(0,255,208,.22);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      outline:none;
+    }
+    textarea{min-height:90px; resize:vertical}
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;}
+    .hint{color:var(--muted); font-size:12px; margin-top:8px}
+
+    .kpis{display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; margin-bottom:16px;}
+    @media (max-width: 980px){ .kpis{grid-template-columns: repeat(2, 1fr);} }
+    .kpi{
+      border:1px solid var(--line);
+      background: rgba(0,255,208,.05);
+      border-radius:16px;
+      padding:12px;
+    }
+    .kpi .v{font-size:20px; font-weight:800}
+    .kpi .t{font-size:12px; color:var(--muted)}
+    .toolbar{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:10px 0 12px;}
+    .toolbar input{max-width:320px}
+    table{width:100%; border-collapse:separate; border-spacing:0 10px;}
+    thead th{font-size:12px; color:var(--muted); text-align:left; padding:0 10px 8px;}
+    tbody tr{
+      background: rgba(3,10,18,.65);
+      border:1px solid rgba(0,255,208,.18);
+    }
+    tbody td{padding:12px 10px; border-top:1px solid rgba(0,255,208,.12); border-bottom:1px solid rgba(0,255,208,.12);}
+    tbody td:first-child{border-left:1px solid rgba(0,255,208,.12); border-radius:14px 0 0 14px;}
+    tbody td:last-child{border-right:1px solid rgba(0,255,208,.12); border-radius:0 14px 14px 0;}
+    .tag{
+      display:inline-flex; align-items:center; gap:6px;
+      padding:6px 10px; border-radius:999px;
+      border:1px solid rgba(0,255,208,.22);
+      background: rgba(0,255,208,.06);
+      font-size:12px; color:var(--text);
+      white-space:nowrap;
+    }
+    .tag.warn{border-color: rgba(255,209,102,.35); background: rgba(255,209,102,.10);}
+    .tag.danger{border-color: rgba(255,77,109,.35); background: rgba(255,77,109,.12);}
+    .tag.ok{border-color: rgba(0,255,208,.35); background: rgba(0,255,208,.10);}
+    .mini{
+      padding:8px 10px; border-radius:12px; font-size:12px;
+    }
+    .dangerBtn{border-color: rgba(255,77,109,.35); background: rgba(255,77,109,.12);}
+    .dangerBtn:hover{box-shadow: 0 0 24px rgba(255,77,109,.14); background: rgba(255,77,109,.16);}
+    .muted{color:var(--muted)}
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="topbar">
+    <div class="brand">⚡ <span>SINERGIA.SYSTEM</span> <span class="chip">Módulo Ventas</span></div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <button class="btn mini" onclick="location.href='dashboard.html'">← Volver al Dashboard</button>
+      <button class="btn mini dangerBtn" id="resetAll">Reset (borrar todo)</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="kpis">
+    <div class="kpi"><div class="v" id="kTotal">0</div><div class="t">Leads totales</div></div>
+    <div class="kpi"><div class="v" id="kNuevos">0</div><div class="t">Nuevos</div></div>
+    <div class="kpi"><div class="v" id="kInteres">0</div><div class="t">Interesados</div></div>
+    <div class="kpi"><div class="v" id="kCerrados">0</div><div class="t">Cerrados (Pagó)</div></div>
+  </div>
+
+  <div class="grid">
+    <!-- FORM -->
+    <section class="card">
+      <h2>➕ Nuevo lead / cliente</h2>
+
+      <div class="row">
+        <div>
+          <label>Nombre</label>
+          <input id="nombre" placeholder="Ej: Juan Pérez" />
+        </div>
+        <div>
+          <label>WhatsApp / Contacto</label>
+          <input id="contacto" placeholder="Ej: +51 9xx xxx xxx" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label>Servicio / Oferta</label>
+          <select id="oferta">
+            <option value="Dashboard PRO">Dashboard PRO</option>
+            <option value="CV Profesional">CV Profesional</option>
+            <option value="Flyer / Diseño">Flyer / Diseño</option>
+            <option value="Automatización simple">Automatización simple</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+        <div>
+          <label>Estado</label>
+          <select id="estado">
+            <option value="Nuevo">Nuevo</option>
+            <option value="Contactado">Contactado</option>
+            <option value="Interesado">Interesado</option>
+            <option value="Negociando">Negociando</option>
+            <option value="Pagó">Pagó</option>
+            <option value="Entregado">Entregado</option>
+            <option value="Perdido">Perdido</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label>Precio (S/ o $) — opcional</label>
+          <input id="precio" placeholder="Ej: S/ 190" />
+        </div>
+        <div>
+          <label>Recordatorio (fecha) — opcional</label>
+          <input id="recordatorio" type="date" />
+        </div>
+      </div>
+
+      <label>Notas (qué pidió / qué falta / cuándo escribir)</label>
+      <textarea id="notas" placeholder="Ej: Quiere dashboard para su negocio, enviar demo hoy 7pm"></textarea>
+
+      <div class="actions">
+        <button class="btn primary" id="guardar">Guardar lead</button>
+        <button class="btn" id="limpiar">Limpiar</button>
+      </div>
+
+      <div class="hint">📌 Se guarda en tu PC (LocalStorage). Si abres el archivo otra vez, sigue ahí.</div>
+    </section>
+
+    <!-- LISTA -->
+    <section class="card">
+      <h2>📋 Pipeline (lista de leads)</h2>
+
+      <div class="toolbar">
+        <input id="buscar" placeholder="Buscar por nombre, contacto u oferta..." />
+        <select id="filtroEstado">
+          <option value="">Todos los estados</option>
+          <option>Nuevo</option><option>Contactado</option><option>Interesado</option>
+          <option>Negociando</option><option>Pagó</option><option>Entregado</option><option>Perdido</option>
+        </select>
+        <select id="orden">
+          <option value="reciente">Más reciente</option>
+          <option value="antiguo">Más antiguo</option>
+          <option value="estado">Por estado</option>
+        </select>
+      </div>
+
+      <div style="overflow:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>Cliente</th>
+              <th>Oferta</th>
+              <th>Estado</th>
+              <th>Recordatorio</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tabla"></tbody>
+        </table>
+      </div>
+
+      <div class="hint muted">Tip: cambia el estado desde “Editar” para moverlos en tu pipeline.</div>
+    </section>
+  </div>
+</main>
+
+<script>
+  const KEY = "sinergia_leads_v1";
+
+  const $ = (id) => document.getElementById(id);
+
+  const estadoTagClass = (estado) => {
+    if (estado === "Pagó" || estado === "Entregado") return "ok";
+    if (estado === "Interesado" || estado === "Negociando") return "warn";
+    if (estado === "Perdido") return "danger";
+    return "";
+  };
+
+  const load = () => {
+    try { return JSON.parse(localStorage.getItem(KEY)) || []; }
+    catch { return []; }
+  };
+
+  const save = (arr) => localStorage.setItem(KEY, JSON.stringify(arr));
+
+  const clearForm = () => {
+    $("nombre").value = "";
+    $("contacto").value = "";
+    $("oferta").value = "Dashboard PRO";
+    $("estado").value = "Nuevo";
+    $("precio").value = "";
+    $("recordatorio").value = "";
+    $("notas").value = "";
+  };
+
+  const normalize = (s) => (s || "").toString().toLowerCase().trim();
+
+  const getFiltered = () => {
+    const q = normalize($("buscar").value);
+    const fe = $("filtroEstado").value;
+    const order = $("orden").value;
+
+    let leads = load();
+
+    if (q) {
+      leads = leads.filter(x =>
+        normalize(x.nombre).includes(q) ||
+        normalize(x.contacto).includes(q) ||
+        normalize(x.oferta).includes(q) ||
+        normalize(x.notas).includes(q)
+      );
+    }
+    if (fe) leads = leads.filter(x => x.estado === fe);
+
+    if (order === "reciente") leads.sort((a,b) => b.createdAt - a.createdAt);
+    if (order === "antiguo") leads.sort((a,b) => a.createdAt - b.createdAt);
+    if (order === "estado") leads.sort((a,b) => (a.estado||"").localeCompare(b.estado||""));
+
+    return leads;
+  };
+
+  const updateKPIs = () => {
+    const all = load();
+    $("kTotal").innerText = all.length;
+    $("kNuevos").innerText = all.filter(x => x.estado === "Nuevo").length;
+    $("kInteres").innerText = all.filter(x => x.estado === "Interesado").length;
+    $("kCerrados").innerText = all.filter(x => x.estado === "Pagó").length;
+  };
+
+  const render = () => {
+    const leads = getFiltered();
+    const tbody = $("tabla");
+    tbody.innerHTML = "";
+
+    leads.forEach((x) => {
+      const tr = document.createElement("tr");
+
+      const cliente = document.createElement("td");
+      cliente.innerHTML = `
+        <div style="font-weight:800">${escapeHtml(x.nombre || "—")}</div>
+        <div class="muted" style="font-size:12px">${escapeHtml(x.contacto || "")}</div>
+        <div class="muted" style="font-size:12px">${escapeHtml(x.precio || "")}</div>
+      `;
+
+      const oferta = document.createElement("td");
+      oferta.innerHTML = `<span class="tag">${escapeHtml(x.oferta || "")}</span>`;
+
+      const estado = document.createElement("td");
+      const cls = estadoTagClass(x.estado);
+      estado.innerHTML = `<span class="tag ${cls}">${escapeHtml(x.estado || "")}</span>`;
+
+      const rec = document.createElement("td");
+      rec.innerHTML = `<span class="muted">${x.recordatorio ? escapeHtml(x.recordatorio) : "—"}</span>`;
+
+      const acciones = document.createElement("td");
+      acciones.innerHTML = `
+        <button class="btn mini" data-edit="${x.id}">Editar</button>
+        <button class="btn mini dangerBtn" data-del="${x.id}">Borrar</button>
+      `;
+
+      tr.appendChild(cliente);
+      tr.appendChild(oferta);
+      tr.appendChild(estado);
+      tr.appendChild(rec);
+      tr.appendChild(acciones);
+
+      tbody.appendChild(tr);
+    });
+
+    // acciones
+    document.querySelectorAll("[data-del]").forEach(btn => {
+      btn.onclick = () => {
+        const id = btn.getAttribute("data-del");
+        const all = load().filter(x => x.id !== id);
+        save(all);
+        updateKPIs();
+        render();
+      };
+    });
+
+    document.querySelectorAll("[data-edit]").forEach(btn => {
+      btn.onclick = () => {
+        const id = btn.getAttribute("data-edit");
+        const lead = load().find(x => x.id === id);
+        if (!lead) return;
+
+        const nuevoNombre = prompt("Nombre:", lead.nombre || "") ?? lead.nombre;
+        const nuevoContacto = prompt("Contacto:", lead.contacto || "") ?? lead.contacto;
+        const nuevaOferta = prompt("Oferta:", lead.oferta || "") ?? lead.oferta;
+        const nuevoEstado = prompt("Estado (Nuevo/Contactado/Interesado/Negociando/Pagó/Entregado/Perdido):", lead.estado || "") ?? lead.estado;
+        const nuevoPrecio = prompt("Precio (opcional):", lead.precio || "") ?? lead.precio;
+        const nuevoRec = prompt("Recordatorio YYYY-MM-DD (opcional):", lead.recordatorio || "") ?? lead.recordatorio;
+        const nuevasNotas = prompt("Notas:", lead.notas || "") ?? lead.notas;
+
+        const all = load().map(x => x.id === id ? ({
+          ...x,
+          nombre: nuevoNombre,
+          contacto: nuevoContacto,
+          oferta: nuevaOferta,
+          estado: nuevoEstado,
+          precio: nuevoPrecio,
+          recordatorio: nuevoRec,
+          notas: nuevasNotas
+        }) : x);
+
+        save(all);
+        updateKPIs();
+        render();
+      };
+    });
+  };
+
+  const escapeHtml = (str) =>
+    (str || "").toString()
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+
+  $("guardar").onclick = () => {
+    const nombre = $("nombre").value.trim();
+    const contacto = $("contacto").value.trim();
+    if (!nombre) return alert("Pon al menos el nombre.");
+    if (!contacto) return alert("Pon al menos un contacto (WhatsApp).");
+
+    const lead = {
+      id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2),
+      nombre,
+      contacto,
+      oferta: $("oferta").value,
+      estado: $("estado").value,
+      precio: $("precio").value.trim(),
+      recordatorio: $("recordatorio").value,
+      notas: $("notas").value.trim(),
+      createdAt: Date.now()
+    };
+
+    const all = load();
+    all.push(lead);
+    save(all);
+    clearForm();
+    updateKPIs();
+    render();
+  };
+
+  $("limpiar").onclick = clearForm;
+
+  $("buscar").oninput = render;
+  $("filtroEstado").onchange = render;
+  $("orden").onchange = render;
+
+  $("resetAll").onclick = () => {
+    if (confirm("¿Seguro que quieres borrar TODOS los leads?")) {
+      localStorage.removeItem(KEY);
+      updateKPIs();
+      render();
+    }
+  };
+
+  // init
+  updateKPIs();
+  render();
+</script>
+</body>
+</html>

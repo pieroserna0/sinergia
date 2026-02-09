@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Módulo IA - SINERGIA</title>
+<meta charset="UTF-8">
+<style>
+body{
+  background:#05080f;
+  color:white;
+  font-family:Arial;
+  text-align:center;
+  padding:40px;
+}
+.box{
+  max-width:600px;
+  margin:auto;
+  background:#0b1320;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 0 20px #00ffd5;
+}
+input{
+  width:80%;
+  padding:10px;
+  border-radius:6px;
+  border:none;
+  outline:none;
+}
+button{
+  margin-top:10px;
+  padding:10px 20px;
+  border:none;
+  border-radius:6px;
+  background:#00ffd5;
+  color:black;
+  font-weight:bold;
+  cursor:pointer;
+}
+#respuesta{
+  margin-top:15px;
+  color:#00ffd5;
+}
+a{
+  color:#00ffd5;
+  text-decoration:none;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+  <h1>🤖 Núcleo IA - SINERGIA</h1>
+  <p>Escribe una pregunta:</p>
+  <input id="pregunta" placeholder="Ej: Cómo ganar dinero online">
+  <br>
+  <button onclick="responder()">Analizar</button>
+  <div id="respuesta"></div>
+  <br>
+  <a href="system.html">⬅ Volver al sistema</a>
+</div>
+
+<script>
+function responder(){
+  let p = document.getElementById("pregunta").value.toLowerCase();
+  let r = "⚠️ Analizando información...";
+
+  if(p.includes("dinero")){
+    r = "💰 Idea: crear servicios digitales, páginas web o contenido con IA.";
+  } 
+  else if(p.includes("negocio")){
+    r = "🚀 Negocio recomendado: automatización, marketing digital o ebooks.";
+  }
+  else if(p.includes("ia")){
+    r = "🤖 La IA es el núcleo de SINERGIA para escalar sistemas digitales.";
+  }
+  else{
+    r = "🧠 SINERGIA IA: procesa tu idea y genera estrategias inteligentes.";
+  }
+
+  document.getElementById("respuesta").innerHTML = r;
+}<script>
+function calcularIA() {
+  let clientes = parseFloat(document.getElementById("clientes").value) || 0;
+  let precio = parseFloat(document.getElementById("precio").value) || 0;
+
+  let ingresos = clientes * precio;
+
+  let nivel = "";
+  if(ingresos < 500){
+    nivel = "💀 Nivel bajo";
+  } else if(ingresos < 2000){
+    nivel = "⚡ Nivel medio";
+  } else if(ingresos < 5000){
+    nivel = "🔥 Nivel alto";
+  } else {
+    nivel = "👑 Nivel premium";
+  }
+
+  let mensajeIA = "";
+  if(clientes < 10){
+    mensajeIA = "La IA recomienda aumentar marketing.";
+  } else if(precio < 10){
+    mensajeIA = "La IA recomienda subir precios.";
+  } else {
+    mensajeIA = "La IA detecta un modelo rentable.";
+  }
+
+  document.getElementById("resultado").innerHTML =
+    "💰 Ingresos estimados: $" + ingresos +
+    "<br>📊 Estado: " + nivel +
+    "<br>🤖 IA: " + mensajeIA;
+}
+</script>
+<input type="number" id="clientes" placeholder="Clientes">
+<input type="number" id="precio" placeholder="Precio por cliente">
+<button onclick="calcularIA()">Analizar IA</button>
+
+<div id="resultado" style="margin-top:15px;color:#00ffd5;"></div>
+</html>
